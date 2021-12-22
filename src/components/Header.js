@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { CryptoState } from "../CryptoContext";
+
 import {
   AppBar,
   Toolbar,
@@ -7,13 +9,13 @@ import {
   Typography,
   MenuItem,
   Select,
-  InputLabel,
   makeStyles,
   createTheme,
   ThemeProvider,
 } from "@material-ui/core";
 
 export default function Header() {
+  const { currency, setCurrency } = CryptoState();
   //Dark Theme
   const theme = createTheme({
     palette: {
@@ -28,13 +30,6 @@ export default function Header() {
   const useStyles = makeStyles(() => ({
     title: {
       flex: 1,
-      fontFamily: "MonteCarlo",
-      fontSize: 40,
-      color: "gold",
-      cursor: "pointer",
-    },
-
-    logo: {
       fontFamily: "MonteCarlo",
       fontSize: 40,
       color: "gold",
@@ -56,16 +51,21 @@ export default function Header() {
               <Typography
                 onClick={() => navigate("/")}
                 className={classes.title}
+                variant="h5"
               >
                 Crypto Coin
               </Typography>
+
               <Select
                 variant="outlined"
+                defaultValue={"USD"}
                 style={{
                   width: 100,
                   height: 40,
-                  marginLeft: 15,
-                  textAlign: "right",
+                  marginRight: 15,
+                  color: "white",
+                  value: { currency },
+                
                 }}
               >
                 <MenuItem value={"USD"}>USD</MenuItem>
