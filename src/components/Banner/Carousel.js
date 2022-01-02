@@ -6,6 +6,10 @@ import { CryptoState } from "../../CryptoContext";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 
+export function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const Carousel = () => {
   const [trending, setTrending] = useState([]);
   const { currency, symbol } = CryptoState();
@@ -29,10 +33,6 @@ const Carousel = () => {
   const classes = useStyles();
 
   // Regex function for add comma in between the price
-
-  function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
 
   // get the trending coin data from the api
 
@@ -71,7 +71,8 @@ const Carousel = () => {
         </span>
         <br />
         <span style={{ fontSize: 22, fontWeight: 500 }}>
-          {symbol}{numberWithCommas(coin.current_price.toFixed(2))}
+          {symbol}
+          {numberWithCommas(coin.current_price.toFixed(2))}
         </span>
       </Link>
     );
