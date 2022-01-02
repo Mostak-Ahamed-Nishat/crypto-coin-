@@ -58,18 +58,17 @@ export default function Header() {
 
               <Select
                 variant="outlined"
-                defaultValue={"USD"}
                 style={{
                   width: 100,
                   height: 40,
                   marginRight: 15,
                   color: "white",
-                  value: { currency },
-                
                 }}
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
               >
-                <MenuItem value={"USD"}>USD</MenuItem>
-                <MenuItem value={"TK"}>TK</MenuItem>
+                <MenuItem value={"usd"}>USD</MenuItem>
+                <MenuItem value={"bdt"}>BDT</MenuItem>
               </Select>
             </Toolbar>
           </Container>
