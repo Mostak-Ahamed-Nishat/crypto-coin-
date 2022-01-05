@@ -223,7 +223,7 @@ function CoinsTable() {
             className={{ ul: classes.pagination }}
             onChange={(_, value) => {
               setPage(value);
-              window.scroll(0, 400);
+              window.scroll(0, 500);
             }}
           />
         </Container>

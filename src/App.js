@@ -5,7 +5,6 @@ import CoinPage from "./components/CoinPage";
 import "./App.css";
 import { makeStyles } from "@material-ui/core";
 
-
 function App() {
   //Create a style
   const useStyles = makeStyles(() => ({
@@ -17,14 +16,14 @@ function App() {
   }));
   //Create styles class
   const classes = useStyles();
-  
+
   return (
     <BrowserRouter>
       <div className={classes.App}>
         <Header />
         <Routes>
           <Route path="/" element={<Homepage />}></Route>
-          <Route path="coin:id" element={<CoinPage />}></Route>
+          <Route path="/coins/:id" element={<CoinPage />}></Route>
         </Routes>
       </div>
     </BrowserRouter>
