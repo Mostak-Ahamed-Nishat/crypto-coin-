@@ -38,6 +38,7 @@ function CoinsTable() {
     setLoading(false);
   };
 
+  // console.log(coins);
   const { symbol } = CryptoState();
 
   //Create History Route
