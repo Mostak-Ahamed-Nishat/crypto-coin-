@@ -17,6 +17,8 @@ import {
   PointElement,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { chartDays } from "../config/data";
+import SelectButton from "./SelectButton";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement);
 
@@ -46,6 +48,7 @@ function CoinInfo({ id, coin }) {
       justifyContent: "center",
       marginTop: 25,
       padding: 40,
+      marginLeft: 50,
       [theme.breakpoints.down("md")]: {
         width: "100%",
         marginTop: 0,
@@ -66,7 +69,6 @@ function CoinInfo({ id, coin }) {
   };
 
   useEffect(() => fetchData(), [currency, days]);
-  console.log(historicalData);
 
   //Chart Data
 
@@ -112,11 +114,11 @@ function CoinInfo({ id, coin }) {
 
   // var options = {
   //   maintainAspectRatio: false,
-  //   scales: {
-  //     y: {
-  //       beginAtZero: true,
-  //     },
+  // scales: {
+  //   y: {
+  //     beginAtZero: true,
   //   },
+  // },
   //   legend: {
   //     labels: {
   //       fontSize: 26,
@@ -138,16 +140,16 @@ function CoinInfo({ id, coin }) {
           ) : (
             <div>
               <Line
-                height="600"
+                height={600}
+                width={700}
                 data={{
                   labels: historicalData.map((coin) => {
                     let date = new Date(coin[0]);
                     let time =
                       date.getHours() > 12
-                        ? `${date.getHours() - 12}
-                        : ${date.getMinutes()} PM`
-                        : `${date.getHours()}
-                        : ${date.getMinutes()} AM`;
+                        ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+                        : `${date.getMinutes()}:${date.getMinutes()} AM`;
+
                     return days === 1 ? time : date.toLocaleDateString();
                   }),
                   datasets: [
@@ -159,6 +161,13 @@ function CoinInfo({ id, coin }) {
                   ],
                 }}
                 options={{
+                  responsive: true,
+                  plugins: {
+                    title: {
+                      display: true,
+                      text: "Chart.js Line Chart",
+                    },
+                  },
                   elements: {
                     point: {
                       radius: 1,
@@ -166,10 +175,26 @@ function CoinInfo({ id, coin }) {
                   },
                 }}
               />
+              <div
+                style={{
+                  display: "flex",
+                  marginTop: 20,
+                  justifyContent: "space-around",
+                  width: "100%",
+                }}
+              >
+                {chartDays.map((day) => (
+                  <SelectButton
+                    key={day.value}
+                    onClick={() => setDays(day.value)}
+                    selected={day.value === days}
+                  >
+                    {day.label}
+                  </SelectButton>
+                ))}
+              </div>
             </div>
           )}
-
-          {/* BUTTON  */}
         </div>
       </ThemeProvider>
     </div>
@@ -177,6 +202,3 @@ function CoinInfo({ id, coin }) {
 }
 
 export default CoinInfo;
-{
-  /* <Line height="400" data={data} options={options} /> */
-}
