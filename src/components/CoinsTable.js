@@ -87,6 +87,7 @@ function CoinsTable() {
     },
   });
 
+  // console.log(coins);
   return (
     <div>
       <ThemeProvider theme={darkTheme}>

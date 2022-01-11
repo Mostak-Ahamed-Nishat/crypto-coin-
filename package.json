@@ -9,8 +9,12 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.24.0",
+    "buffer": "^6.0.3",
+    "chart.js": "^3.7.0",
+    "faker": "^6.6.6",
     "react": "^17.0.2",
     "react-alice-carousel": "^2.5.1",
+    "react-chartjs-2": "^4.0.0",
     "react-dom": "^17.0.2",
     "react-html-parser": "^2.0.2",
     "react-leaflet": "^3.2.2",
@@ -31,7 +35,7 @@
     ]
   },
   "browser": {
-    "[module-name]": false   
+    "[module-name]": false
   },
   "browserslist": {
     "production": [
