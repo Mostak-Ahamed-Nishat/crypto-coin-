@@ -13,6 +13,7 @@ import {
   createTheme,
   ThemeProvider,
 } from "@material-ui/core";
+import AuthModal from "./Authentication/AuthModal";
 
 export default function Header() {
   const { currency, setCurrency } = CryptoState();
@@ -70,6 +71,7 @@ export default function Header() {
                 <MenuItem value={"usd"}>USD</MenuItem>
                 <MenuItem value={"bdt"}>BDT</MenuItem>
               </Select>
+              <AuthModal />
             </Toolbar>
           </Container>
         </AppBar>
