@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CoinList } from "../config/Api";
-import Banner from "./Banner/Banner";
+
+// import Banner from "./Banner/Banner";
 import { numberWithCommas } from "./Banner/Carousel";
-import axios from "axios";
+// import axios from "axios";
 import { CryptoState } from "../CryptoContext";
 import {
   Container,
@@ -24,19 +24,12 @@ import { Pagination } from "@material-ui/lab";
 
 function CoinsTable() {
   //State
-  const [coins, setCoins] = useState([]);
-  const [loading, setLoading] = useState(false);
+
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
   // Import State
-  const { currency } = CryptoState();
-  const fetchCoin = async () => {
-    setLoading(true);
-    const { data } = await axios.get(CoinList(currency));
-    setCoins(data);
-    setLoading(false);
-  };
+  const { currency, coins, loading, fetchCoin } = CryptoState();
 
   // console.log(coins);
   const { symbol } = CryptoState();
