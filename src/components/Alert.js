@@ -5,8 +5,6 @@ import { CryptoState } from "../CryptoContext";
 
 const Alert = () => {
   const { alert, setAlert } = CryptoState();
-
-  console.log(alert.type);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;

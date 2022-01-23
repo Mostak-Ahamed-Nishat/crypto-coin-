@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { CryptoState } from "../CryptoContext";
-
+import AuthModal from "./Authentication/AuthModal";
+import UserSidebar from "./Authentication/UserSidebar";
 import {
   AppBar,
   Toolbar,
@@ -12,11 +13,11 @@ import {
   makeStyles,
   createTheme,
   ThemeProvider,
+  Button,
 } from "@material-ui/core";
-import AuthModal from "./Authentication/AuthModal";
 
 export default function Header() {
-  const { currency, setCurrency } = CryptoState();
+  const { currency, setCurrency, user } = CryptoState();
   //Dark Theme
   const theme = createTheme({
     palette: {
@@ -71,7 +72,7 @@ export default function Header() {
                 <MenuItem value={"usd"}>USD</MenuItem>
                 <MenuItem value={"bdt"}>BDT</MenuItem>
               </Select>
-              <AuthModal />
+              {user ? <UserSidebar /> : <AuthModal />}
             </Toolbar>
           </Container>
         </AppBar>
