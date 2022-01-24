@@ -5,6 +5,8 @@ import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import { CryptoState } from "../../CryptoContext";
 import { Avatar } from "@material-ui/core";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const useStyles = makeStyles({
   container: {
@@ -15,7 +17,45 @@ const useStyles = makeStyles({
     flexDirection: "column",
     fontFamily: "monospace",
   },
+  profile: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "20px",
+    height: "92%",
+  },
+  picture: {
+    width: 200,
+    height: 200,
+    cursor: "pointer",
+    backgroundColor: "#EEBC1D",
+    objectFit: "contain",
+  },
+  logout: {
+    height: "6%",
+    width: "100%",
+    backgroundColor: "gold",
+    marginTop: 20,
+  },
+  watchlist: {
+    flex: 1,
+    width: "100%",
+    backgroundColor: "grey",
+    borderRadius: 10,
+    padding: 15,
+    paddingTop: 10,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 12,
+    overflowY: "scroll",
+  },
 });
+
+const logOut = () => {
+  signOut(auth);
+};
 
 const UserSidebar = () => {
   //Import user
@@ -61,10 +101,9 @@ const UserSidebar = () => {
             <div className={classes.container}>
               <div className={classes.profile}>
                 <Avatar
-                  className={classes.picture}
-                  onClick={toggleDrawer(anchor, true)}
-                  alt={user.displayName || user.email}
                   src={user.photoURL}
+                  alt={user.displayName || user.email}
+                  className={classes.picture}
                 />
                 <span
                   style={{
@@ -74,8 +113,25 @@ const UserSidebar = () => {
                     fontWeight: "bolder",
                     wordWrap: "break-word",
                   }}
-                ></span>
+                >
+                  {user.displayName || user.email}
+                </span>
+                <div className={classes.watchlist}>
+                  <span style={{ fontSize: 15, textShadow: "e 0 5px black" }}>
+                    Watchlist
+                  </span>
+                </div>
               </div>
+              <Button
+                variant="contained"
+                className={classes.logout}
+                onClick={logOut}
+                style={{
+                  backgroundColor: "gold",
+                }}
+              >
+                Logout
+              </Button>
             </div>
           </Drawer>
         </React.Fragment>

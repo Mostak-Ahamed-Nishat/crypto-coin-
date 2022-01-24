@@ -3,11 +3,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import { AppBar, Button } from "@material-ui/core";
+import { AppBar, Box, Button } from "@material-ui/core";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Singin from "./Singin";
 import Singup from "./Singup";
+import GoogleButton from "react-google-button";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../firebase";
+import { CryptoState } from "../../CryptoContext";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -21,6 +25,15 @@ const useStyles = makeStyles((theme) => ({
     width: 380,
     borderRadius: 10,
   },
+  google: {
+    padding: 24,
+    paddingTop: 0,
+    display: "flex",
+    flexDirection: "column",
+    textAlign: "center",
+    gap: 20,
+    fontSize: 20,
+  },
 }));
 
 export default function AuthModal() {
@@ -30,9 +43,25 @@ export default function AuthModal() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  //Login with google
+  const googleProvider = new GoogleAuthProvider();
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, googleProvider).then((res) => {
+      setAlert({
+        open: true,
+        message: `Sing up successfully.Welcome ${res.user.email}`,
+        type: "success",
+      });
+    });
+  };
+
+  //Login
   const handleOpen = () => {
     setOpen(true);
   };
+
+  const { setAlert } = CryptoState();
 
   const handleClose = () => {
     setOpen(false);
@@ -79,6 +108,18 @@ export default function AuthModal() {
 
             {value === 0 && <Singin handleClose={handleClose} />}
             {value === 1 && <Singup handleClose={handleClose} />}
+
+            <Box className={classes.google}>
+              <span>OR</span>
+              <GoogleButton
+                style={{
+                  width: "100%",
+                  outline: "none",
+                  borderRadius: 6,
+                }}
+                onClick={signInWithGoogle}
+              />
+            </Box>
           </div>
         </Fade>
       </Modal>
