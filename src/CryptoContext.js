@@ -2,7 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { CoinList } from "./config/Api";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 
 const Crypto = createContext();
 
@@ -12,7 +13,11 @@ const CryptoContext = ({ children }) => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
+  //Watchlist for user
 
+  const [watchlist, setWatchlist] = useState([]);
+
+  console.log(user);
   //For ALert toaster message
   const [alert, setAlert] = useState({
     open: false,
@@ -29,13 +34,28 @@ const CryptoContext = ({ children }) => {
   };
 
   // For check user logged in or not
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) setUser(user);
       else setUser(null);
     });
   }, []);
+
+  // For check setWatchList
+
+  useEffect(() => {
+    if (user) {
+      const coinReference = doc(db, "watchlist", user.uid);
+      var unSubscribe = onSnapshot(coinReference, (coin) => {
+        if (coin.exists()) {
+          setWatchlist(coin.data().coins);
+        } else {
+          console.log("No Item available");
+        }
+      });
+    }
+    return () => unSubscribe;
+  }, [user]);
 
   //For Currency
   useEffect(() => {
@@ -55,6 +75,8 @@ const CryptoContext = ({ children }) => {
         alert,
         setAlert,
         user,
+        watchlist,
+        setWatchlist,
       }}
     >
       {children}

@@ -47,13 +47,21 @@ export default function AuthModal() {
   //Login with google
   const googleProvider = new GoogleAuthProvider();
   const signInWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).then((res) => {
-      setAlert({
-        open: true,
-        message: `Sing up successfully.Welcome ${res.user.email}`,
-        type: "success",
-      });
-    });
+    signInWithPopup(auth, googleProvider)
+      .then((res) => {
+        setAlert({
+          open: true,
+          message: `Sing up successfully.Welcome ${res.user.email}`,
+          type: "success",
+        });
+      })
+      .catch((error) =>
+        setAlert({
+          open: true,
+          message: `Sing up successfully.Welcome ${error.message}`,
+          type: "error",
+        })
+      );
   };
 
   //Login
